@@ -1,45 +1,42 @@
-import { Component } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { MatDrawer } from '@angular/material/sidenav';
 @Component({
 	selector: 'ngx-classwork-root',
 	templateUrl: './app.component.html',
-	// template: '<div></div>',
 	styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
 	public title = 'Ngx Course';
 
-	private salary = 3000;
+	public drawer!: MatDrawer;
 
-	public arr = [1, 2, 3];
+	public text = 'Galaxy 10';
 
-	public myWidth = 50;
+	public person1 = { name: 'Ihor' };
 
-	public span = this.domSanitizer.bypassSecurityTrustHtml('<span style="color: red">My tag</span>');
-
-	public imgSrc =
-		'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/250px-Angular_full_color_logo.svg.png';
-
-	public user = { info: { male: true } } as any;
-
-	public getSalary() {
-		return Math.round(this.salary);
+	public constructor(
+		// private applicationRef: ApplicationRef
+		private changeDetectorRef: ChangeDetectorRef,
+	) {
+		console.log(this.changeDetectorRef);
+		setTimeout(() => {
+			// this.applicationRef.tick();
+			this.person1 = { name: 'Lena' };
+		}, 5000);
 	}
 
-	public constructor(private readonly domSanitizer: DomSanitizer) {}
-
-	public myClick(ref: HTMLElement, e: Event) {
-		console.log('CLICK', ref);
-		console.log('CLICK', e);
+	public changeText(text: string) {
+		this.text = text;
 	}
 
-	public search(e: Event) {
-		const { value } = e.target as HTMLInputElement;
-		this.title = value;
-	}
-
-	public toggle(myObject: { ngx: string }) {
-		console.log(myObject);
+	public setDrawer(drawer: MatDrawer) {
+		// Promise.resolve().then(() => {
+		// 	this.drawer = drawer;
+		// });
+		// setTimeout(() => {
+		// 	this.drawer = drawer;
+		// });
+		this.drawer = drawer;
+		this.changeDetectorRef.detectChanges();
 	}
 }

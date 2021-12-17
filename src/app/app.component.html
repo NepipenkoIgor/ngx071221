@@ -1,13 +1,16 @@
-<ngx-classwork-header [title]="title"
-                      (toggleSideNav)="toggle( $event)"></ngx-classwork-header>
+<ngx-classwork-header [title]="title" [drawer]="drawer">
 
 
-<div>
-  <h3>{{inputRef.value + ' ' + getSalary() + '$' }}</h3>
-  <p>{{arr}}</p>
-  <img [src]="imgSrc" [style.width.%]="myWidth" [alt]="title">
-</div>
-<div [innerHTML]="span" (click)="myClick(inputRef, $event)">
-</div>
+</ngx-classwork-header>
+<ngx-classwork-default [person]="person1"></ngx-classwork-default>
+<ngx-classwork-on-push  [person]="person1"></ngx-classwork-on-push>
+<ngx-classwork-drawer (setDrawerControl)="setDrawer($event)">
+  <!--<ngx-classwork-search-->
+  <!--  [searchTerm]="text"-->
+  <!--   (searchTermChange)="changeText($event)"></ngx-classwork-search>-->
+  <ng-template #contentTmpl>
+    <ngx-classwork-search [(searchTerm)]="text"></ngx-classwork-search>
+    {{text}}
+  </ng-template>
 
-<input type="text" #inputRef (input)="search($event)">
+</ngx-classwork-drawer>
