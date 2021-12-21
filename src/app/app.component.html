@@ -2,15 +2,29 @@
 
 
 </ngx-classwork-header>
-<ngx-classwork-default [person]="person1"></ngx-classwork-default>
-<ngx-classwork-on-push  [person]="person1"></ngx-classwork-on-push>
 <ngx-classwork-drawer (setDrawerControl)="setDrawer($event)">
   <!--<ngx-classwork-search-->
   <!--  [searchTerm]="text"-->
   <!--   (searchTermChange)="changeText($event)"></ngx-classwork-search>-->
   <ng-template #contentTmpl>
     <ngx-classwork-search [(searchTerm)]="text"></ngx-classwork-search>
-    {{text}}
+    <mat-checkbox [checked]="onlyFavorites" (change)="onlyFavorites = $event.checked">Checked</mat-checkbox>
+    <div
+      fxLayout="row wrap" fxLayoutGap="16px grid"
+      *ngIf="products$ | async as myProducts; else loader; ">
+      <ngx-classwork-product-card
+        fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%"
+        *ngFor="let product of myProducts | productsFilter:text: onlyFavorites; odd as isOdd"
+        [product]="product"
+        [isOdd]="isOdd"
+      ></ngx-classwork-product-card>
+    </div>
+    <ng-template #loader>
+      <div>
+        ...loading
+      </div>
+    </ng-template>
+
   </ng-template>
 
 </ngx-classwork-drawer>

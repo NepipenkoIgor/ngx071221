@@ -1,16 +1,5 @@
 /* eslint-disable @angular-eslint/no-conflicting-lifecycle */
-import {
-	AfterContentChecked,
-	AfterContentInit,
-	AfterViewChecked,
-	AfterViewInit,
-	Component,
-	DoCheck,
-	Input,
-	OnChanges,
-	OnInit,
-	SimpleChanges,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
@@ -18,24 +7,9 @@ import { MatDrawer } from '@angular/material/sidenav';
 	templateUrl: './header.component.html',
 	styleUrls: ['./header.component.css'],
 })
-export class HeaderComponent
-	implements
-		OnInit,
-		OnChanges,
-		DoCheck,
-		AfterContentInit,
-		AfterContentChecked,
-		AfterViewInit,
-		AfterViewChecked
-{
+export class HeaderComponent {
 	@Input()
 	public title: string = '';
-	// public set title(text: string) {
-	// 	console.log('CHANGE', text);
-	// 	this.internalTitle = text;
-	// }
-	//
-	// public internalTitle: string = '';
 
 	@Input()
 	public drawer!: MatDrawer;
@@ -44,44 +18,7 @@ export class HeaderComponent
 		console.log('constructor', this.title);
 	}
 
-	public ngOnInit() {
-		console.log('ngOnInit');
-	}
-
-	public ngOnChanges(changes: SimpleChanges) {
-		console.log('ngOnChanges', changes);
-	}
-
-	public ngDoCheck() {
-		console.log('ngDoCheck');
-	}
-
-	public ngAfterContentInit() {
-		console.log('ngAfterContentInit');
-	}
-
-	public ngAfterContentChecked() {
-		console.log('ngAfterContentChecked');
-	}
-
-	public ngAfterViewInit() {
-		console.log('ngAfterViewInit');
-	}
-
-	public ngAfterViewChecked() {
-		console.log('ngAfterViewzChecked');
-	}
-
 	public toggle() {
 		this.drawer.toggle();
 	}
 }
-
-/*
- DoCheck
-    -
-    -
-    -
-    -
-
- */
