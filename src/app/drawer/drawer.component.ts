@@ -30,18 +30,13 @@ export class DrawerComponent implements OnInit, AfterViewInit, AfterContentInit 
 
 	@Output()
 	public setDrawerControl: EventEmitter<MatDrawer> = new EventEmitter<MatDrawer>();
-	// public setDrawerControl: EventEmitter<MatDrawer> = new EventEmitter<MatDrawer>(true);
 
 	public ngOnInit(): void {
-		// console.log(this.drawer);
-		// console.log(this.tmpl);
 		this.contentPlace.createEmbeddedView(this.tmpl);
 		this.setDrawerControl.emit(this.drawer);
 	}
 
-	public ngAfterContentInit() {
-		// console.log(this.tmpl);
-	}
+	public ngAfterContentInit() {}
 
 	public ngAfterViewInit() {
 		// this.contentPlace.createEmbeddedView(this.tmpl);

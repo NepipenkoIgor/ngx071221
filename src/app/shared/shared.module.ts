@@ -9,8 +9,12 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { HiddenDirective } from './hidden/hidden.directive';
+
+const declarations = [HiddenDirective];
 
 @NgModule({
+	declarations,
 	exports: [
 		MatToolbarModule,
 		MatButtonModule,
@@ -22,6 +26,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 		MatCardModule,
 		MatCheckboxModule,
 		FlexLayoutModule,
+		...declarations,
 	],
 })
 export class SharedModule {}

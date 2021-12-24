@@ -14,10 +14,6 @@ export class HeaderComponent {
 	@Input()
 	public drawer!: MatDrawer;
 
-	public constructor() {
-		console.log('constructor', this.title);
-	}
-
 	public toggle() {
 		this.drawer.toggle();
 	}

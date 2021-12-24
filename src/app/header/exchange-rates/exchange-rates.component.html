@@ -1,0 +1,10 @@
+<div (mouseenter)="pc.show();nc.show()" (mouseleave)="pc.hide();nc.hide()"
+     *ngxClassworkExchangeRates="let rate from rates autoplay mode delay ms; next as nextCtrl; prev as prevCtrl">
+  <button mat-button (click)="prevCtrl()" ngxClassworkHidden #pc="ngwh">
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </button>
+  <span>{{rate.value | currency: rate.currency : 'symbol-narrow'}}</span>
+  <button mat-button (click)="nextCtrl()" ngxClassworkHidden #nc="ngwh">
+    <mat-icon>keyboard_arrow_right</mat-icon>
+  </button>
+</div>
