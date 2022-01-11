@@ -7,6 +7,7 @@
   <!--  [searchTerm]="text"-->
   <!--   (searchTermChange)="changeText($event)"></ngx-classwork-search>-->
   <ng-template #contentTmpl>
+    <ngx-classwork-modal></ngx-classwork-modal>
     <ngx-classwork-search [(searchTerm)]="text"></ngx-classwork-search>
     <mat-checkbox [checked]="onlyFavorites" (change)="onlyFavorites = $event.checked">Checked</mat-checkbox>
     <div
@@ -28,3 +29,4 @@
   </ng-template>
 
 </ngx-classwork-drawer>
+

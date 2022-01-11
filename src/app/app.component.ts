@@ -1,8 +1,7 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { IProduct } from './data';
 import { UnSubscriber } from './unsubscriber';
-import { ProductsService } from './products.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -22,7 +21,7 @@ export class AppComponent extends UnSubscriber {
 	public onlyFavorites: boolean = false;
 
 	public constructor(
-		private productsService: ProductsService,
+		@Inject('Products') private productsService: any,
 		private changeDetectorRef: ChangeDetectorRef,
 	) {
 		super();

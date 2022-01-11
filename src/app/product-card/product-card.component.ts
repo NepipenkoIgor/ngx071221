@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { IProduct } from '../data';
 import { ProductsService } from '../products.service';
+import { ModalService } from '../modal/modal.service';
 
 @Component({
 	selector: 'ngx-classwork-product-card',
@@ -21,7 +22,15 @@ export class ProductCardComponent {
 	public isOdd: boolean = false;
 
 	// public constructor(@Inject(ProductsService) public productsService: any) {
-	public constructor(public productsService: ProductsService) {
-		console.log(productsService);
+	public constructor(
+		// @Host() public productsService: ProductsService,
+		@Inject(ProductsService) public productsService: any,
+		private readonly modalService: ModalService,
+	) {
+		console.log('ProductCardComponent==>', productsService);
+	}
+
+	public addToCart() {
+		this.modalService.open(this.product);
 	}
 }

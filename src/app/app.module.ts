@@ -10,8 +10,12 @@ import { ProductsFilterPipe } from './products-filter.pipe';
 import { SharedModule } from './shared/shared.module';
 import { ExchangeRatesComponent } from './header/exchange-rates/exchange-rates.component';
 import { ExchangeRatesDirective } from './header/exchange-rates/exchange-rates.directive';
-import { ProductsService } from './products.service';
 import { HttpClientModule } from '@angular/common/http';
+import { environment } from '../environments/environment';
+import { BASE_URL } from './tokens';
+import { ProductsService } from './products.service';
+import { ModalModule } from './modal/modal.module';
+import { of } from 'rxjs';
 
 @NgModule({
 	declarations: [
@@ -24,8 +28,60 @@ import { HttpClientModule } from '@angular/common/http';
 		ExchangeRatesComponent,
 		ExchangeRatesDirective,
 	],
-	imports: [BrowserModule, BrowserAnimationsModule, SharedModule, HttpClientModule],
-	providers: [ProductsService],
+	imports: [BrowserModule, BrowserAnimationsModule, SharedModule, HttpClientModule, ModalModule],
+	providers: [
+		{
+			provide: ProductsService,
+			useFactory: () => {
+				const width = window.innerWidth;
+				console.log(width);
+				if (width > 500) {
+					return {
+						getProducts() {
+							return of([
+								{
+									_id: '61c200dc8532d2c0ec8a9dc3',
+									title: 'Galaxy S3',
+									img: 'assets/img/product-5.jpg',
+									price: 23,
+									author: 'Samsung',
+									isFavorite: true,
+								},
+							]);
+						},
+					};
+				}
+				return {
+					getProducts() {
+						return of([
+							{
+								_id: '61c200dc8532d2c0ec8a9dc3',
+								title: 'Galaxy S15',
+								img: 'assets/img/product-5.jpg',
+								price: 23,
+								author: 'Samsung',
+								isFavorite: true,
+							},
+						]);
+					},
+				};
+			},
+		},
+		{
+			provide: 'Products',
+			useExisting: ProductsService,
+		},
+		{
+			provide: BASE_URL,
+			useValue: environment.baseUrl,
+			multi: true,
+		},
+		{
+			provide: 'baseUrl',
+			useValue: 'localhost:3000',
+			multi: true,
+		},
+	],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

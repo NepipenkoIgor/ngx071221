@@ -17,6 +17,7 @@ import { MatDrawer } from '@angular/material/sidenav';
 	selector: 'ngx-classwork-drawer',
 	templateUrl: './drawer.component.html',
 	styleUrls: ['./drawer.component.css'],
+	// providers: [{ provide: ProductsService, useValue: 'drawer' }],
 })
 export class DrawerComponent implements OnInit, AfterViewInit, AfterContentInit {
 	@ViewChild('drawer', { static: true })
