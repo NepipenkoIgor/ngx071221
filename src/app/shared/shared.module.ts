@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,14 +10,18 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HiddenDirective } from './hidden/hidden.directive';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { BASE_URL } from './token/tokens';
+import { environment } from '../../environments/environment';
+import { CommonModule } from '@angular/common';
 
 const declarations = [HiddenDirective];
 
 @NgModule({
 	declarations,
 	exports: [
+		CommonModule,
 		MatToolbarModule,
 		MatButtonModule,
 		MatIconModule,
@@ -28,6 +32,7 @@ const declarations = [HiddenDirective];
 		MatCardModule,
 		MatCheckboxModule,
 		FlexLayoutModule,
+		HttpClientModule,
 		...declarations,
 	],
 	providers: [
@@ -38,4 +43,17 @@ const declarations = [HiddenDirective];
 		},
 	],
 })
-export class SharedModule {}
+export class SharedModule {
+	public static forRoot(): ModuleWithProviders<SharedModule> {
+		return {
+			ngModule: SharedModule,
+			providers: [
+				{
+					provide: BASE_URL,
+					useValue: environment.baseUrl,
+					multi: true,
+				},
+			],
+		};
+	}
+}

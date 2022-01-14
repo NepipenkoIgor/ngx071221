@@ -1,7 +1,6 @@
-import { Component, Inject, Input } from '@angular/core';
-import { IProduct } from '../data';
-import { ProductsService } from '../products.service';
-import { ModalService } from '../modal/modal.service';
+import { Component, Inject, Injector, Input } from '@angular/core';
+import { IProduct, ProductsService } from '../products.service';
+import { ModalService } from '../../../modal/modal.service';
 
 @Component({
 	selector: 'ngx-classwork-product-card',
@@ -26,11 +25,27 @@ export class ProductCardComponent {
 		// @Host() public productsService: ProductsService,
 		@Inject(ProductsService) public productsService: any,
 		private readonly modalService: ModalService,
+		private readonly injector: Injector,
 	) {
 		console.log('ProductCardComponent==>', productsService);
 	}
 
-	public addToCart() {
-		this.modalService.open(this.product);
+	public async addToCart() {
+		const m = await import('./product-confirm/product-confirm.component');
+		this.modalService.open({
+			component: m.ProductConfirmComponent,
+			injector: this.injector,
+			context: {
+				product: { ...this.product },
+				add: () => {
+					console.log('Add to cart');
+					this.modalService.close();
+				},
+				close: () => {
+					console.log('Add to cart');
+					this.modalService.close();
+				},
+			},
+		});
 	}
 }

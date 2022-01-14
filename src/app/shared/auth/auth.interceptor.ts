@@ -7,7 +7,7 @@ import {
 	HttpResponse,
 } from '@angular/common/http';
 import { catchError, filter, map, Observable, throwError } from 'rxjs';
-import { BASE_URL } from '../../tokens';
+import { BASE_URL } from '../token/tokens';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
