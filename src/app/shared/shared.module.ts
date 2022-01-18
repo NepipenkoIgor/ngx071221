@@ -15,6 +15,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { BASE_URL } from './token/tokens';
 import { environment } from '../../environments/environment';
 import { CommonModule } from '@angular/common';
+import { AuthGuard } from './auth/auth.guard';
 
 const declarations = [HiddenDirective];
 
@@ -48,6 +49,7 @@ export class SharedModule {
 		return {
 			ngModule: SharedModule,
 			providers: [
+				AuthGuard,
 				{
 					provide: BASE_URL,
 					useValue: environment.baseUrl,

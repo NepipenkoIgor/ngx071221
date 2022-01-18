@@ -1,6 +1,6 @@
 import { Component, Inject, Injector, Input } from '@angular/core';
 import { IProduct, ProductsService } from '../products.service';
-import { ModalService } from '../../../modal/modal.service';
+import { ModalService } from '../../../../../modal/modal.service';
 
 @Component({
 	selector: 'ngx-classwork-product-card',

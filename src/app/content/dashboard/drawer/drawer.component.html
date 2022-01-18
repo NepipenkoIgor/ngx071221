@@ -2,8 +2,8 @@
   <mat-drawer #drawer class="example-sidenav" mode="side">
 <!--    <ng-content select="mat-list"></ng-content>-->
     <mat-list role="list">
-      <mat-list-item role="listitem">Products</mat-list-item>
-      <mat-list-item role="listitem">Profile</mat-list-item>
+      <mat-list-item role="listitem" [routerLink]="['/dashboard/products']" >Products</mat-list-item>
+      <mat-list-item role="listitem" [routerLink]="['/dashboard/profile']">Profile</mat-list-item>
       <mat-list-item role="listitem">Log Out</mat-list-item>
     </mat-list>
   </mat-drawer>

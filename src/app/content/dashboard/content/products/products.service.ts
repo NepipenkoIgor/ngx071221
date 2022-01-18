@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, of } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 
 export interface IProduct {
 	_id: string;
@@ -19,6 +19,14 @@ export class ProductsService {
 		return this.http.get<IProduct[]>('/products').pipe(
 			catchError(() => {
 				return of([]);
+			}),
+		);
+	}
+
+	public getProduct(id: string): Observable<IProduct | null> {
+		return this.http.get<IProduct>(`/products/${id}`).pipe(
+			catchError(() => {
+				return of(null);
 			}),
 		);
 	}
