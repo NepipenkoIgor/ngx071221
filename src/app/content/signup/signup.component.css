@@ -1,0 +1,12 @@
+/*input.ng-invalid.ng-touched {*/
+/*  border: 1px solid red;*/
+/*}*/
+.signup-content {
+  padding: 60px 1rem;
+}
+
+mat-card {
+  max-width: 400px;
+  margin: 2em auto;
+  text-align: center;
+}

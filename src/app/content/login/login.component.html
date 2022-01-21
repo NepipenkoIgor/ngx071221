@@ -1,2 +1,48 @@
-<p>login works!</p>
-<span [routerLink]="['/signup']">Go to Signup</span>
+<div class="signup-content" ngForm #f="ngForm">
+  <mat-card>
+    <mat-card-content>
+      <div fxLayout="column" fxLayoutGap="8px">
+        <p>Login form</p>
+        <mat-form-field>
+          <input matInput type="text" placeholder="User name"
+                 name="username" ngModel #c="ngModel" required minlength="4" ngxClassworkUserNameValidator>
+          <!--          <mat-error *ngIf="c.errors && c.errors['minlength']">-->
+          <!--            you entered {{c.errors['minlength'].actualLength}} from {{c.errors['minlength'].requiredLength}}-->
+          <!--          </mat-error>-->
+          <mat-error *ngIf="c.errors && c.errors['withoutSpecialCharacters'] as error">{{error}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Password"
+                 type="password" name="password" ngModel required>
+        </mat-form-field>
+
+<!--        <div ngModelGroup="password">-->
+<!--          <mat-form-field>-->
+<!--            <input matInput-->
+<!--                   placeholder="Password"-->
+<!--                   type="password" name="password" ngModel required>-->
+<!--          </mat-form-field>-->
+<!--          <mat-form-field>-->
+<!--            <input matInput-->
+<!--                   placeholder="Password"-->
+<!--                   type="password" name="cpassword" ngModel required>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+        <button mat-raised-button color="primary" [disabled]="f.invalid" (click)="login(f.value)">Sign Up</button>
+        <span [routerLink]="['/signup']">Go to Signup</span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+</div>
+<!--<pre>-->
+<!--  {{f.value | json}}-->
+<!--</pre>-->
+
+<!--<p>login works!</p>-->
+<!--<span [routerLink]="['/signup']">Go to Signup</span>-->
+
+<!--{{c.valid}}-->
+<!--{{c.valueChanges | async}}-->
+<!--{{c.statusChanges | async}}-->

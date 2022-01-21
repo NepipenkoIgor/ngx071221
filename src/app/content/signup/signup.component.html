@@ -1,2 +1,52 @@
-<p>signup works!</p>
-<span (click)="goToLogin()">Go to Login</span>
+<div class="signup-content" [formGroup]="signUpForm">
+  <mat-card>
+    <mat-card-content>
+      <div fxLayout="column" fxLayoutGap="8px">
+        <p>Sign Up Form</p>
+        <mat-form-field>
+          <!--          [formControl]="$any(signUpForm.get('username'))"-->
+          <input matInput type="text" placeholder="User name" formControlName="username">
+          <!--          <mat-error *ngIf="c.errors && c.errors['minlength']">-->
+          <!--            you entered {{c.errors['minlength'].actualLength}} from {{c.errors['minlength'].requiredLength}}-->
+          <!--          </mat-error>-->
+          <mat-error
+            *ngIf="signUpForm.get('username')?.errors && signUpForm.get('username')?.errors?.['withoutSpecialCharacters'] as error">{{error}}</mat-error>
+        </mat-form-field>
+        <div fxLayout="column" formGroupName="emails" >
+          <div fxLayout="row"
+               *ngFor="let c of getControls(signUpForm, 'emails');index as i; first as f; count as length">
+            <mat-form-field  fxFlex="90">
+              <input matInput placeholder="Email"
+                     [formControlName]="i">
+            </mat-form-field>
+            <div fxFlex="10" fxLayout="row">
+              <mat-icon *ngIf="f" (click)="addEmail()">add</mat-icon>
+              <mat-icon *ngIf="length > 1" (click)="removeEmail(i)">delete</mat-icon>
+            </div>
+          </div>
+
+        </div>
+        <div formGroupName="password" fxLayout="column">
+          <!--          [formControl]="$any(signUpForm.get('password','cpassword' ))"-->
+          <mat-form-field>
+            <input matInput
+                   formControlName="password"
+                   placeholder="Password"
+                   type="password">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput
+                   formControlName="cpassword"
+                   placeholder="Confirm Password"
+                   type="password">
+          </mat-form-field>
+        </div>
+        <button mat-raised-button color="primary" [disabled]="signUpForm.invalid || signUpForm.pending"
+                (click)="signup()">Sign Up
+        </button>
+        <span (click)="goToLogin()">Go to LogIn</span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+</div>
