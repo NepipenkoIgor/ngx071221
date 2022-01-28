@@ -1,18 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable, pluck } from 'rxjs';
-import { IProduct, ProductsService } from './products.service';
+import { IProduct } from './products.service';
 import { UnSubscriber } from '../../../../shared/utils/unsubscriber';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { IProductState } from './store';
+import { getProductsPending } from './store/actions/products.actions';
 
 @Component({
 	selector: 'ngx-classwork-products',
 	templateUrl: './products.component.html',
 	styleUrls: ['./products.component.css'],
 })
-export class ProductsComponent extends UnSubscriber {
+export class ProductsComponent extends UnSubscriber implements OnInit {
 	public text = 'Galaxy 10';
 
-	public products$: Observable<IProduct[]> = this.productsService.getProducts();
+	public products$: Observable<IProduct[]> = this.store.select('products');
 
 	public onlyFavorites: boolean = false;
 
@@ -20,9 +23,13 @@ export class ProductsComponent extends UnSubscriber {
 
 	public constructor(
 		private readonly activatedRoute: ActivatedRoute,
-		private productsService: ProductsService,
+		private store: Store<IProductState>,
 	) {
 		super();
+	}
+
+	public ngOnInit() {
+		this.store.dispatch(getProductsPending());
 	}
 
 	public changeText(text: string) {

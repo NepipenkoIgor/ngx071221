@@ -12,6 +12,10 @@
           <mat-error
             *ngIf="signUpForm.get('username')?.errors && signUpForm.get('username')?.errors?.['withoutSpecialCharacters'] as error">{{error}}</mat-error>
         </mat-form-field>
+        <div fxFlex="row" fxLayout="start center" fxLayoutGap="8px">
+          <div>Male</div>
+          <ngx-classwork-switcher formControlName="male"></ngx-classwork-switcher>
+        </div>
         <div fxLayout="column" formGroupName="emails" >
           <div fxLayout="row"
                *ngFor="let c of getControls(signUpForm, 'emails');index as i; first as f; count as length">
@@ -26,7 +30,7 @@
           </div>
 
         </div>
-        <div formGroupName="password" fxLayout="column">
+        <div formGroupName="passwords" fxLayout="column">
           <!--          [formControl]="$any(signUpForm.get('password','cpassword' ))"-->
           <mat-form-field>
             <input matInput

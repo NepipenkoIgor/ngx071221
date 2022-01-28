@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { ValidatorsService } from '../../shared/validators/validators.service';
+import { Store } from '@ngrx/store';
+import { IAppState } from '../../store';
+import { signUpPending } from '../../store/actions/auth.actions';
 
 @Component({
 	selector: 'ngx-classwork-signup',
@@ -22,8 +25,9 @@ export class SignupComponent {
 				updateOn: 'change',
 			},
 		],
+		male: [true],
 		emails: this.fb.array([this.fb.control('', Validators.required)]),
-		password: this.fb.group(
+		passwords: this.fb.group(
 			{
 				password: ['', Validators.required],
 				cpassword: ['', Validators.required],
@@ -38,8 +42,13 @@ export class SignupComponent {
 		private readonly router: Router,
 		private readonly fb: FormBuilder,
 		private readonly validatorsService: ValidatorsService,
+		private readonly store: Store<IAppState>,
 	) {
 		// this.signUpForm.patchValue({ password: { password: '' } }, { emitEvent: false });
+
+		setTimeout(() => {
+			this.signUpForm.patchValue({ male: false });
+		}, 5000);
 	}
 
 	public goToLogin(): void {
@@ -48,6 +57,11 @@ export class SignupComponent {
 
 	public signup() {
 		console.log(this.signUpForm.value);
+		const {
+			passwords: { password },
+			...user
+		} = this.signUpForm.value;
+		this.store.dispatch(signUpPending({ user: { ...user, password } }));
 	}
 
 	public getControls(control: AbstractControl, path: string): AbstractControl[] {

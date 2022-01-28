@@ -19,6 +19,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserNameValidatorDirective } from './validators/user-name-validator.directive';
 import { ValidatorsService } from './validators/validators.service';
+import { AuthService } from './auth/auth.service';
 
 const declarations = [HiddenDirective, UserNameValidatorDirective];
 
@@ -54,6 +55,7 @@ export class SharedModule {
 		return {
 			ngModule: SharedModule,
 			providers: [
+				AuthService,
 				ValidatorsService,
 				AuthGuard,
 				{
