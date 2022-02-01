@@ -12,6 +12,9 @@ import {
 	EventEmitter,
 } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
+import { Store } from '@ngrx/store';
+import { IAppState } from '../../../store';
+import { logOut } from '../../../store/actions/auth.actions';
 
 @Component({
 	selector: 'ngx-classwork-drawer',
@@ -32,6 +35,8 @@ export class DrawerComponent implements OnInit, AfterViewInit, AfterContentInit 
 	@Output()
 	public setDrawerControl: EventEmitter<MatDrawer> = new EventEmitter<MatDrawer>();
 
+	public constructor(private readonly store: Store<IAppState>) {}
+
 	public ngOnInit(): void {
 		this.contentPlace.createEmbeddedView(this.tmpl);
 		this.setDrawerControl.emit(this.drawer);
@@ -41,5 +46,9 @@ export class DrawerComponent implements OnInit, AfterViewInit, AfterContentInit 
 
 	public ngAfterViewInit() {
 		// this.contentPlace.createEmbeddedView(this.tmpl);
+	}
+
+	public logout() {
+		this.store.dispatch(logOut());
 	}
 }

@@ -21,13 +21,16 @@ export class AuthInterceptor implements HttpInterceptor {
 		request: HttpRequest<unknown>,
 		next: HttpHandler,
 	): Observable<HttpEvent<unknown>> {
+		const url = request.url;
+		if (/^assets/.test(url)) {
+			return next.handle(request);
+		}
+
 		return this.authService.getTokenFromLocalStorage().pipe(
 			switchMap((accessToken: string | null) => {
 				const headers = request.headers
 					.append('Content-Type', 'application/json')
 					.append('Authorization', `Bearer ${accessToken} `);
-				const url = request.url;
-
 				const req = request.clone({
 					url: `${this.baseUrl}${url}`,
 					headers,

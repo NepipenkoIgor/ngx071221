@@ -9,14 +9,28 @@ import { Store, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
-import { reducers } from './store';
+import { metaReducers, reducers } from './store';
 import { checkJWT } from './store/actions/auth.actions';
 import { AuthEffects } from './store/effects/auth.effects';
+import { RouterEffects } from './store/effects/router.effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { CustomSerializer } from './store/reducers/router.reducers';
+import { HttpClient } from '@angular/common/http';
+import { catchError, EMPTY, tap } from 'rxjs';
 
-export function initApp(store: Store) {
+export function initApp(store: Store, http: HttpClient) {
 	return () => {
 		//TODO show dynamic config
 		store.dispatch(checkJWT());
+		return http.get('assets/config/config.json').pipe(
+			tap((data) => {
+				console.log('Do something', data);
+			}),
+			catchError((err) => {
+				console.log(err);
+				return EMPTY;
+			}),
+		);
 	};
 }
 
@@ -28,8 +42,11 @@ export function initApp(store: Store) {
 		AppRoutingModule,
 		SharedModule.forRoot(),
 		ModalModule.forRoot(),
-		StoreModule.forRoot(reducers),
-		EffectsModule.forRoot([AuthEffects]),
+		StoreModule.forRoot(reducers, { metaReducers: metaReducers as any }),
+		EffectsModule.forRoot([AuthEffects, RouterEffects]),
+		StoreRouterConnectingModule.forRoot({
+			serializer: CustomSerializer,
+		}),
 		StoreDevtoolsModule.instrument({
 			maxAge: 25, // Retains last 25 states
 			logOnly: environment.production, // Restrict extension to log-only mode
@@ -40,7 +57,7 @@ export function initApp(store: Store) {
 		{
 			provide: APP_INITIALIZER,
 			useFactory: initApp,
-			deps: [Store],
+			deps: [Store, HttpClient],
 			multi: true,
 		},
 	],
